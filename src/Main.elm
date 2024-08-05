@@ -1,79 +1,62 @@
 module Main exposing (..)
 
-import Browser
-import Html
-import Html.Attributes exposing (value)
-import Html.Events exposing (onClick, onInput)
+import Element
+import Element.Background
+import Element.Font
 
 
-initModel : Model
-initModel =
-    { message = "Welcome"
-    , firstname = ""
-    , age = 0
-    }
-
-
-main : Program () Model Msg
 main =
-    Browser.sandbox
-        { init = initModel
-        , view = view
-        , update = update
+    viewLayout
+
+
+red =
+    Element.rgb255 255 0 0
+
+
+blue =
+    Element.rgb255 0 0 200
+
+
+black =
+    Element.rgb255 0 0 0
+
+
+lightGray =
+    Element.rgb255 180 180 180
+
+
+viewLayout =
+    Element.layoutWith
+        { options = []
         }
+        [ Element.Background.color lightGray
+        , Element.padding 22
+        ]
+        (Element.column []
+            [ viewTitle
+            , viewSubtitle
+            , dogImage
+            ]
+        )
 
 
-type Msg
-    = MsgSuprise
-    | MsgReset
-    | MsgNewName String
-    | MsgNewAgeAsString String
-
-
-type alias Model =
-    { message : String
-    , firstname : String
-    , age : Int
-    }
-
-
-view : Model -> Html.Html Msg
-view model =
-    Html.div []
-        [ Html.text model.message
-        , Html.input [ onInput MsgNewName, value model.firstname ] []
-        , Html.input [ onInput MsgNewAgeAsString, value (String.fromInt model.age) ] []
-        , Html.button [ onClick MsgSuprise ] [ Html.text "Surprise" ]
-        , Html.button [ onClick MsgReset ] [ Html.text "Reset" ]
-        , Html.text (String.fromInt (String.length model.firstname))
+viewTitle =
+    Element.paragraph
+        [ Element.Font.bold
+        , Element.Font.color blue
+        ]
+        [ Element.text "My Dog"
         ]
 
 
-update : Msg -> Model -> Model
-update msg model =
-    case msg of
-        MsgSuprise ->
-            { model
-                | message = "Happy Birthday " ++ model.firstname ++ " with " ++ String.fromInt model.age ++ " years old !!"
-            }
+viewSubtitle =
+    Element.paragraph [ Element.Font.color black ]
+        [ Element.text "A web page for my dog"
+        ]
 
-        MsgReset ->
-            initModel
 
-        MsgNewName newName ->
-            { model
-                | firstname = newName
-            }
-
-        MsgNewAgeAsString newValue ->
-            case String.toInt newValue of
-                Just anInt ->
-                    { model
-                        | age = anInt
-                    }
-
-                Nothing ->
-                    { model
-                        | message = "The age is wrong"
-                        , age = 0
-                    }
+dogImage =
+    Element.image [ Element.width Element.fill ]
+        { src = "dog.png"
+        , description = "A picture of my dog"
+        }
