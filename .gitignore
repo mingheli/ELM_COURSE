@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables
+.env
+
+#generated stuff
+elm-stuff/*
+elm-stuff/0.19.1/d.dat
+elm-stuff/0.19.1/Main.elmi
+elm-stuff/0.19.1/Main.elmo
+elm-stuff/0.19.1/d.dat
+elm-stuff/0.19.1/Main.elmi
+elm-stuff/0.19.1/Main.elmo
+elm-stuff/generated-code/elm-community/elm-test/0.19.1-revision12/elm-stuff/0.19.1/d.dat
+elm-stuff/generated-code/elm-community/elm-test/0.19.1-revision12/elm-stuff/0.19.1/Main.elmi
+elm-stuff/generated-code/elm-community/elm-test/0.19.1-revision12/elm-stuff/0.19.1/Main.elmo

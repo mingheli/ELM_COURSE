@@ -4953,6 +4953,7 @@ function _Browser_load(url)
 		}
 	}));
 }
+var $author$project$Main$initModel = {age: 0, firstname: '', message: 'Welcome'};
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -10577,14 +10578,36 @@ var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'MsgSuprise':
-				return {firstname: model.firstname, message: 'Happy Birthday ' + (model.firstname + ' !!')};
+				return _Utils_update(
+					model,
+					{
+						message: 'Happy Birthday ' + (model.firstname + (' with ' + ($elm$core$String$fromInt(model.age) + ' years old !!')))
+					});
 			case 'MsgReset':
-				return {firstname: '', message: 'Welcome'};
-			default:
+				return $author$project$Main$initModel;
+			case 'MsgNewName':
 				var newName = msg.a;
-				return {firstname: newName, message: model.message};
+				return _Utils_update(
+					model,
+					{firstname: newName});
+			default:
+				var newValue = msg.a;
+				var _v1 = $elm$core$String$toInt(newValue);
+				if (_v1.$ === 'Just') {
+					var anInt = _v1.a;
+					return _Utils_update(
+						model,
+						{age: anInt});
+				} else {
+					return _Utils_update(
+						model,
+						{age: 0, message: 'The age is wrong'});
+				}
 		}
 	});
+var $author$project$Main$MsgNewAgeAsString = function (a) {
+	return {$: 'MsgNewAgeAsString', a: a};
+};
 var $author$project$Main$MsgNewName = function (a) {
 	return {$: 'MsgNewName', a: a};
 };
@@ -10606,6 +10629,15 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_Nil),
 				A2(
+				$elm$html$Html$input,
+				_List_fromArray(
+					[
+						$elm$html$Html$Events$onInput($author$project$Main$MsgNewAgeAsString),
+						$elm$html$Html$Attributes$value(
+						$elm$core$String$fromInt(model.age))
+					]),
+				_List_Nil),
+				A2(
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
@@ -10624,14 +10656,13 @@ var $author$project$Main$view = function (model) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text('Reset')
-					]))
+					])),
+				$elm$html$Html$text(
+				$elm$core$String$fromInt(
+					$elm$core$String$length(model.firstname)))
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$sandbox(
-	{
-		init: {firstname: '', message: 'Welcome'},
-		update: $author$project$Main$update,
-		view: $author$project$Main$view
-	});
+	{init: $author$project$Main$initModel, update: $author$project$Main$update, view: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
-	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{},"unions":{"Main.Msg":{"args":[],"tags":{"MsgSuprise":[],"MsgReset":[],"MsgNewName":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}}}}})}});}(this));
+	$elm$json$Json$Decode$succeed(_Utils_Tuple0))({"versions":{"elm":"0.19.1"},"types":{"message":"Main.Msg","aliases":{},"unions":{"Main.Msg":{"args":[],"tags":{"MsgSuprise":[],"MsgReset":[],"MsgNewName":["String.String"],"MsgNewAgeAsString":["String.String"]}},"String.String":{"args":[],"tags":{"String":[]}}}}})}});}(this));
